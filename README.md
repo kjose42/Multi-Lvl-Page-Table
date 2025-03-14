@@ -1,5 +1,5 @@
 # Multi-Lvl-Page-Table
-#This project simulates memory management. It simulates a memory multi-level page table that can translate virtual addresses to physical addresses. A Translation Lookaside Buffer is also implemented to make the #translation more efficient.
+This project simulates memory management. It simulates a memory multi-level page table that can translate virtual addresses to physical addresses. A Translation Lookaside Buffer is also implemented to make the translation more efficient.
 
 
 
@@ -46,6 +46,7 @@ pte_t* check_TLB(void *va)
 		va = virtual address  
 	Output:  
 		va's physical address  
+  	Code:  
 	Calculates the tag and set from va  
 	If TLB contains the set, return va's translation  
 
@@ -64,6 +65,7 @@ pte_t* translate(pde_t* pgdir, void* va)
 		va = virtual address to be translated  
 	Output:  
 		physical address of va  
+  	Code:  
 	First, check if the translation is already stored in the TLB  
 	If not:  
 	Using va, this function finds the physical address' indices in the page directory's first and second level.  
@@ -79,6 +81,7 @@ int page_map(pde_t* pgdir, void* va, void* pa)
 		pa = physical address of virtual address  
 	Output:  
 		Boolean that indicates whether the page mapping was successful or not  
+  	Code:  
 	First, check if the translation is already stored in the TLB  
 	If not:  
 	Similar to translate(), finds the indices in the page directory.  
@@ -96,6 +99,7 @@ void* get_next_avail(int num_pages)
 		number of pages needed  
 	Output:  
 		virtual address  
+  	Code:  
 	Using search_bitmap_for_pages(), looks for index in virtual memory to fit pages  
 	Create virtual address based on returned index  
 	Update virtual bitmap for occupied pages  
@@ -108,6 +112,7 @@ void* t_malloc(unsigned int num_bytes)
 		number of bytes to malloc/be allocated  
 	Output:  
 		virtual address  
+  	Code:  
 	If physical memory is not yet initialized, use set_physical_mem()  
 	Calculates how many pages required for input  
 	Using get_next_avail(), find space for pages  
@@ -122,6 +127,7 @@ void t_free (void *va, int size)
 	Input:  
 		va = virtual address of data that needs to be freed  
 		size = size of data  
+  	Code:  
 	Number of pages that need to be freed is calculated from size  
 	Stops loop when page is empty or invalid  
 	Using clear_bit_at_index, clears bits that correspond to freed virtual pages  
@@ -138,6 +144,7 @@ void put_value(void *va, void *val, int size)
 		va = virtual address  
 		val = pointer of data to be inserted in virtual address  
 		size = size of data  
+  	Code:  
 	Finds physical address of virtual address (and additional virtual pages if needed) by using translate()  
 	For each page, update arr's pages with size of data  
 	Copies val's data to physical memory pages  
@@ -150,6 +157,7 @@ void get_value(void* va, void* val, int size)
 		va = virtual address  
 		val = pointer of data to be inserted in virtual address  
 		size = size of data  
+  	Code:  
 	Finds physical address of virtual address (and additional virtual pages if needed) by using translate()  
 	For each page, compare arr's page's data size and size to check if size is bigger than data stored  
 		Return if size is bigger than data stored  
@@ -174,7 +182,8 @@ unsigned long search_bitmap_for_pages(char* bitmap, int num_pages, int bitmap_le
 		num_pages = number of empty pages to retrieve  
 		bitmap_length  
 	Output:  
-		Bitmap index that points to the start of the desired free pages  
+		Bitmap index that points to the start of the desired free pages 
+  	Code  
 	Initialize counter of free pages (free_pages)  
 	For each loop iteration:  
 		If this bit represents the first free page (when free_page == 0), keep track of this page index (stored in index variable)  
