@@ -4,7 +4,7 @@
 
 
 
-.h code
+.h code  
 Created variables:
 	pde_t = represents a Page Directory Entry (1st level of page directory)
 	pte_t = represents a Page Table Entry (2nd level of page directory)
